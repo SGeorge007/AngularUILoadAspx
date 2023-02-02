@@ -1,93 +1,49 @@
-<mat-toolbar color="primary">
-    <mat-toolbar-row>
-    <a mat-icon-button (click)="snav.toggle()">
-        Emerald Perks
-    </a>
+<div class="side-nav-content">
+  <!-- <ul class="nav-list">
+    <li class="nav-list-item">
 
-    <!-- <a (click)="logout()">Logout</a> -->
-    <span class="flexExpand"></span>
+      <span>
+        <a href="#">Test1</a>
+      </span>
+    </li>
+    <li class="nav-list-item">
+      <span>
+        <a href="#">Test2</a>
+      </span>
+    </li>
+  </ul> -->
 
-    <div >
-      <a mat-button (click)="logout()"> Logout </a>
-    </div>
-    </mat-toolbar-row>
-</mat-toolbar>
-
-
-<div>
-    <mat-drawer-container>
-        <mat-drawer #snav [mode]="'side'">
-            <mat-nav-list>
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        Home
-                        <a mat-list-item routerLinkActive="active" [routerLink]="['']"></a>
-                    </mat-expansion-panel-header>
-                </mat-expansion-panel>
-
-
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        Loan Products
-                    </mat-expansion-panel-header>
-                    <mat-nav-list>
-                        <a mat-list-item routerLinkActive="active" [routerLink]="['sidenav/paydownconsent']">Em Adv Pay Down Consent</a>
-                    </mat-nav-list>
-                    <mat-nav-list>
-                        <a mat-list-item routerLinkActive="active" [routerLink]="['sidenav/resetreq']">Emerald Advance Reset Request</a>
-                    </mat-nav-list>
-                    <mat-nav-list>
-                        <a mat-list-item routerLinkActive="active" [routerLink]="['/client']">TestMicroFederation</a>
-                    </mat-nav-list>
-                </mat-expansion-panel>
-                
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        Emerald Card
-                    </mat-expansion-panel-header>
-                    <mat-nav-list>
-                        <a mat-list-item routerLinkActive="active" [routerLink]="['/client']">Issuance/Reissuance</a>
-                    </mat-nav-list>
-                    <mat-nav-list>
-                        <a mat-list-item routerLinkActive="active" [routerLink]="['sidenav/paydownconsent']">Direct Deposit Form</a>
-                    </mat-nav-list>
-                </mat-expansion-panel>
-
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        Emerald Savings
-                    </mat-expansion-panel-header>
-                    <mat-nav-list>
-                        <a mat-list-item routerLinkActive="active" [routerLink]="['sidenav/paydownconsent']">Open Emerald Savings Account</a>
-                    </mat-nav-list>
-                </mat-expansion-panel>
-
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        Debt Submission
-                    </mat-expansion-panel-header>
-                    <mat-nav-list>
-                        <a mat-list-item routerLinkActive="active" [routerLink]="['sidenav/paydownconsent']">Debt Dispute Form</a>
-                    </mat-nav-list>
-                    <mat-nav-list>
-                        <a mat-list-item routerLinkActive="active" [routerLink]="['sidenav/paydownconsent']">Tax Prep Debt Removal Form</a>
-                    </mat-nav-list>
-                </mat-expansion-panel>
-
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        Bank Product (Revealed) Audits
-                    </mat-expansion-panel-header>
-                </mat-expansion-panel>
+        <!-- ng for -->
+        <div *ngFor="let menu of menus" class="nav-list">
+          <div *ngIf="menu.menuOptions && menu.menuOptions.length">
+              <div *ngFor="let parentOptions of menu.menuOptions">
+                  <div *ngIf="parentOptions.enabled==true" class="nav-list-item">
+                      <!-- <mat-expansion-panel> -->
+                        <!-- <div class="dropdown mt-3"> -->
+                        <a class="dropdown-toggle" data-bs-toggle="dropdown"
+                        (click)="getComponentName(parentOptions.url)">
+                          <span style-type="body-copy">{{parentOptions.text}}</span>
+                        </a>
 
 
-                <!-- <a mat-list-item routerLinkActive="active" [routerLink]="['sidenav/resetreq']">Reset Request</a>
-                <a mat-list-item routerLinkActive="active" [routerLink]="['sidenav/about']">About</a> -->
-            </mat-nav-list>
-        </mat-drawer>
+                          <ul class="dropdown-menu text-bg-dark" *ngIf="parentOptions.options && parentOptions.options.length">
+                              <li *ngFor="let childOptions of parentOptions.options">
+                                  <div *ngIf="childOptions.enabled==true">
+                                    
+                                      
+                                        <a href="javascript:void (0)" [routerLink]="'sidenav/paydownconsent'"
+                                        (click)="getComponentName(childOptions.url)">{{childOptions.text}}</a>
+                                      
+                                    
+                                  </div>
+                                </li>
+                            </ul>
+                      <!-- </mat-expansion-panel> -->
+                    <!-- </div> -->
+                  </div>
+              </div>
+          </div>
+      </div>
 
-        <mat-drawer-content class="app-view">
-            <router-outlet></router-outlet>
-        </mat-drawer-content>
-    </mat-drawer-container>
+
 </div>

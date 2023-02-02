@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -7,16 +7,16 @@ import { MsalGuard, MsalInterceptor, MsalBroadcastService, MsalInterceptorConfig
 import { BrowserCacheLocation, InteractionType, IPublicClientApplication, LogLevel, PublicClientApplication } from '@azure/msal-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { MatSidenavModule} from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { PayDownConsentComponent } from './loan-product/pay-down-consent/pay-down-consent.component';
 import { ResetReqComponent } from './loan-product/reset-req/reset-req.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatExpansionModule } from '@angular/material/expansion';
+import { BdsNgModule } from '@bds/bds-ng';
+import { defineCustomElements, applyPolyfills } from '@bds/bds-core/loader';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoadAspxComponent } from './load-aspx/load-aspx.component';
+import { HeaderComponent } from './header/header.component';
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1; // Remove this line to use Angular Universal
 
@@ -62,7 +62,7 @@ export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
 }
 
 export function MSALGuardConfigFactory(): MsalGuardConfiguration {
-  return { 
+  return {
     interactionType: InteractionType.Redirect,
     authRequest: {
       scopes: ['user.read']
@@ -77,7 +77,9 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     AppComponent,
     SideNavComponent,
     PayDownConsentComponent,
-    ResetReqComponent
+    ResetReqComponent,
+    LoadAspxComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -85,11 +87,9 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     HttpClientModule,
     BrowserAnimationsModule,
     MsalModule,
-    MatSidenavModule,
-    MatListModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatExpansionModule
+    BdsNgModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     {
@@ -113,6 +113,13 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     MsalGuard,
     MsalBroadcastService
   ],
-  bootstrap: [AppComponent, MsalRedirectComponent]
+  bootstrap: [AppComponent, MsalRedirectComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule { }
+export class AppModule {
+  constructor() {
+    applyPolyfills().then(() => {
+      defineCustomElements(window);
+    });
+  }
+ }

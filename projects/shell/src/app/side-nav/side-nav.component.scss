@@ -1,0 +1,42 @@
+
+a {
+    text-decoration:none;
+    color: white;
+}
+
+.border-white{
+    border: 1px solid white;
+}
+
+.side-nav-content{
+    color: white;
+    width: 230px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.nav-list{
+    list-style: none;
+    height: 100%;
+    padding: 0%;
+    margin-bottom: 0%;
+    align-items: center;
+}
+
+.nav-list-item{
+    display: flex;
+    align-items: center;
+    height: 50px;
+    text-decoration: none;
+    border: none;
+    background: none;
+    width:100%;
+    cursor: pointer;
+    outline: none;
+}
+
+.nav-list-item:hover{
+    background-color: rgba(255,255,255,0.3);
+    border-radius: 10px;
+}

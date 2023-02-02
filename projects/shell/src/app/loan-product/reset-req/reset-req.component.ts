@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResetReqComponent implements OnInit {
 
+  _URL:string= "https://localhost:44380/About";
+  
   constructor() { }
 
   ngOnInit(): void {
